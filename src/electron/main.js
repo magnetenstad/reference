@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 function createWindow() {
@@ -8,6 +8,7 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
+      contextIsolation: false,
     },
     titleBarStyle: 'hidden',
     titleBarOverlay: {
@@ -17,6 +18,7 @@ function createWindow() {
   });
   win.loadFile('dist/index.html');
 }
+
 app.whenReady().then(() => {
   createWindow();
   app.on('activate', () => {
@@ -25,8 +27,13 @@ app.whenReady().then(() => {
     }
   });
 });
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+ipcMain.on('test', () => {
+  console.log('Received test!');
 });

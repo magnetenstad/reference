@@ -9,9 +9,11 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useEditorStore } from '@/store/editorStore';
+import { useIpcStore } from '@/store/ipcStore';
 
 const textArea = ref<HTMLSpanElement | null>(null);
 const editorStore = useEditorStore();
+const ipcStore = useIpcStore();
 
 onMounted(() => {
   if (!textArea.value) return;
@@ -20,6 +22,7 @@ onMounted(() => {
 
 const focusTextArea = () => {
   textArea.value?.focus();
+  ipcStore.send('test');
 };
 
 const onInput = (event: Event) => {
