@@ -6,7 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Vue + TS</title>
   </head>
+  <style>
+    .titlebar {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-app-region: drag;
+      background-color: black;
+      height: 32px;
+      width: 100%;
+      position: sticky;
+      top: 0;
+    }
+  </style>
   <body>
+    <div class="titlebar">Reference</div>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
