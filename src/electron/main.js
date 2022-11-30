@@ -6,7 +6,7 @@ function createWindow() {
     minWidth: 480,
     minHeight: 480,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'src/electron/preload.js'),
     },
     titleBarStyle: 'hidden',
     titleBarOverlay: {
