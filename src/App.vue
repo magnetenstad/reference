@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import Layout from './components/Layout.vue';
-import Editor from './components/Editor.vue';
+import Layout from '@/components/Layout.vue';
+import Editor from '@/components/Editor.vue';
 </script>
 
 <style scoped>

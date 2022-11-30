@@ -1,17 +1,31 @@
 <template>
   <div class="wrapper" @click="focusTextArea">
-    <h1>Hello world!</h1>
-    <span class="text-area" ref="textArea" contenteditable> etst </span>
+    <h1>Hello world! {{ editorStore.text }}</h1>
+    <span class="text-area" ref="textArea" contenteditable @input="onInput">
+    </span>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useEditorStore } from '@/store/editorStore';
+
 const textArea = ref<HTMLSpanElement | null>(null);
+const editorStore = useEditorStore();
+
+onMounted(() => {
+  if (!textArea.value) return;
+  textArea.value.innerText = editorStore.text;
+});
 
 const focusTextArea = () => {
   textArea.value?.focus();
-  console.log('Focus!' + textArea.value);
+};
+
+const onInput = (event: Event) => {
+  const target = event.target as HTMLInputElement | null;
+  if (!target) return;
+  editorStore.text = target.innerText;
 };
 </script>
 

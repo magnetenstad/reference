@@ -5,11 +5,12 @@
   "main": "main.js",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "vue-tsc && vite build --config vite.electron.config.ts",
     "preview": "vite preview",
-    "electron": "electron ."
+    "electron": "npm run build && electron ."
   },
   "dependencies": {
+    "pinia": "^2.0.27",
     "vue": "^3.2.41"
   },
   "devDependencies": {
