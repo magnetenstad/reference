@@ -20,9 +20,9 @@ onMounted(() => {
   textArea.value.innerText = editorStore.text;
 });
 
-const focusTextArea = () => {
+const focusTextArea = async () => {
   textArea.value?.focus();
-  ipcStore.send('test');
+  console.log(await ipcStore.invoke('test'));
 };
 
 const onInput = (event: Event) => {

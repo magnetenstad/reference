@@ -34,6 +34,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.on('test', () => {
-  console.log('Received test!');
+ipcMain.handle('test', () => {
+  return 'Yes sir!';
 });

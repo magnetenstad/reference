@@ -10,7 +10,10 @@ export const useIpcStore = defineStore('ipc', {
 
   actions: {
     send(text: string) {
-      this.ipcRenderer.send(text);
+      return this.ipcRenderer.send(text);
+    },
+    invoke(text: string) {
+      return this.ipcRenderer.invoke(text);
     },
   },
 });
