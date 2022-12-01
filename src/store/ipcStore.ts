@@ -9,11 +9,13 @@ export const useIpcStore = defineStore('ipc', {
   }),
 
   actions: {
-    send(text: string) {
-      return this.ipcRenderer.send(text);
+    send(text: string, ...args: any[]) {
+      console.log(`Try send ${text} : ${args}`);
+      return this.ipcRenderer.send(text, ...args);
     },
-    invoke(text: string) {
-      return this.ipcRenderer.invoke(text);
+    invoke(text: string, ...args: any[]) {
+      console.log(`Try invoke ${text} : ${args}`);
+      return this.ipcRenderer.invoke(text, ...args);
     },
   },
 });

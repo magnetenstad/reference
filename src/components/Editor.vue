@@ -1,6 +1,11 @@
 <template>
   <div class="wrapper" @click="focusTextArea">
-    <h1>Hello world! {{ editorStore.text }}</h1>
+    <div class="row">
+      <h1>{{ editorStore.file?.name }}</h1>
+      <div>
+        <button @click="onSave">Save</button>
+      </div>
+    </div>
     <span class="text-area" ref="textArea" contenteditable @input="onInput">
     </span>
   </div>
@@ -9,30 +14,31 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useEditorStore } from '@/store/editorStore';
-import { useIpcStore } from '@/store/ipcStore';
 
 const textArea = ref<HTMLSpanElement | null>(null);
 const editorStore = useEditorStore();
-const ipcStore = useIpcStore();
 
-onMounted(() => {
+onMounted(async () => {
   if (!textArea.value) return;
-  textArea.value.innerText = editorStore.text;
+  textArea.value.innerText = await editorStore.readFile();
 });
 
-const focusTextArea = async () => {
+const focusTextArea = () => {
   textArea.value?.focus();
-  console.log(await ipcStore.invoke('test'));
 };
 
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement | null;
-  if (!target) return;
-  editorStore.text = target.innerText;
+  if (!target || !editorStore.file) return;
+  editorStore.file.data = target.innerText;
+};
+
+const onSave = () => {
+  editorStore.writeFile();
 };
 </script>
 
-<style>
+<style scoped>
 .wrapper {
   background-color: #ffffff10;
   color: white;
@@ -43,6 +49,12 @@ const onInput = (event: Event) => {
   height: fit-content;
   padding: 2em;
   border-radius: 0.5em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .text-area {

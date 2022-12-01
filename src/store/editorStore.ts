@@ -1,10 +1,29 @@
 import { defineStore } from 'pinia';
+import { useIpcStore } from '@/store/ipcStore';
+import { File } from 'virtual-file-system';
 
 export const useEditorStore = defineStore('editor', {
-  state: () => ({ text: lorem }),
+  state: () => ({
+    ipcStore: useIpcStore(),
+    file: null as File | null,
+  }),
 
-  actions: {},
+  actions: {
+    async readFile() {
+      this.file = (await this.ipcStore.invoke(
+        'read-file',
+        'C:\\Users\\tenst\\Desktop\\test.txt'
+      )) as File;
+      console.log(`Store: read file ${this.file.name} : ${this.file.data}`);
+      return this.file.data;
+    },
+    writeFile() {
+      if (!this.file) return;
+      console.log(this.file);
+      this.ipcStore.invoke('write-file', {
+        path: this.file.location + this.file.name,
+        data: this.file.data,
+      });
+    },
+  },
 });
-
-const lorem =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';

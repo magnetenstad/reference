@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const { File } = require('virtual-file-system');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -34,6 +35,14 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.handle('test', () => {
-  return 'Yes sir!';
+ipcMain.handle('read-file', (_event, path) => {
+  console.log(`Try read-file ${path}`);
+  return File.read(path);
+});
+
+ipcMain.handle('write-file', (_event, { path, data }) => {
+  console.log(`Try write-file ${path}`);
+  const file = File.read(path);
+  file.data = data;
+  return file.write();
 });
