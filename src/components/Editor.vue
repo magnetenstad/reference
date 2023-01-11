@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper" @click="focusTextArea">
     <div class="row">
-      <h1>{{ editorStore.file?.name }}</h1>
+      <h1>Filename</h1>
       <div>
         <button @click="onSave">Save</button>
       </div>
@@ -29,8 +29,8 @@ const focusTextArea = () => {
 
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement | null;
-  if (!target || !editorStore.file) return;
-  editorStore.file.data = target.innerText;
+  if (!target) return;
+  editorStore.file = target.innerText;
 };
 
 const onSave = () => {

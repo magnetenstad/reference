@@ -2,37 +2,24 @@
   "name": "reference",
   "private": true,
   "version": "0.0.0",
-  "main": "src/electron/main.js",
-  "description": "A simple text editor",
-  "author": {
-    "name": "Magne Tenstad"
-  },
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build --config vite.electron.config.ts",
+    "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "electron": "npm run build && electron .",
-    "compile": "electron-packager . Reference --platform=win32 --arch=x64",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "tauri": "tauri"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "pinia": "^2.0.27",
-    "virtual-file-system": "^1.2.10",
-    "vue": "^3.2.41"
+    "@tauri-apps/api": "^1.2.0",
+    "pinia": "^2.0.28",
+    "vue": "^3.2.45"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.4",
-    "@electron-forge/maker-deb": "^6.0.4",
-    "@electron-forge/maker-rpm": "^6.0.4",
-    "@electron-forge/maker-squirrel": "^6.0.4",
-    "@electron-forge/maker-zip": "^6.0.4",
-    "@vitejs/plugin-vue": "^3.2.0",
-    "electron": "^22.0.0",
+    "@tauri-apps/cli": "^1.2.2",
+    "@types/node": "^18.7.10",
+    "@vitejs/plugin-vue": "^4.0.0",
     "typescript": "^4.6.4",
-    "vite": "^3.2.3",
-    "vue-tsc": "^1.0.9"
+    "vite": "^4.0.0",
+    "vue-tsc": "^1.0.11"
   }
 }
