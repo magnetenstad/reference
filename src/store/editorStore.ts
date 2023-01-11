@@ -1,29 +1,20 @@
 import { defineStore } from 'pinia';
-import { useIpcStore } from '@/store/ipcStore';
-import { File } from 'virtual-file-system';
+import { readTextFile, writeTextFile } from '@tauri-apps/api/fs';
+
+const filepath = 'C:\\Users\\tenst\\Desktop\\test.txt';
 
 export const useEditorStore = defineStore('editor', {
   state: () => ({
-    ipcStore: useIpcStore(),
-    file: null as File | null,
+    file: null as string | null,
   }),
 
   actions: {
     async readFile() {
-      this.file = (await this.ipcStore.invoke(
-        'read-file',
-        'C:\\Users\\tenst\\Desktop\\test.txt'
-      )) as File;
-      console.log(`Store: read file ${this.file.name} : ${this.file.data}`);
-      return this.file.data;
+      return await readTextFile(filepath);
     },
     writeFile() {
       if (!this.file) return;
-      console.log(this.file);
-      this.ipcStore.invoke('write-file', {
-        path: this.file.location + this.file.name,
-        data: this.file.data,
-      });
+      writeTextFile(filepath, this.file);
     },
   },
 });
